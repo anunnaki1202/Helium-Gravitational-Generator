@@ -1,0 +1,67 @@
+import math
+
+class HeliumGravitationalGenerator:
+    def __init__(self, weight, helium_chamber_volume, generator_efficiency, fall_distance):
+        self.weight = weight  # in kg
+        self.helium_chamber_volume = helium_chamber_volume  # in m^3
+        self.generator_efficiency = generator_efficiency  # as a decimal (e.g., 0.70 for 70%)
+        self.fall_distance = fall_distance  # in meters
+        self.gravity_constant = 9.81  # m/s^2, acceleration due to gravity
+
+    def potential_energy(self, height):
+        return self.weight * self.gravity_constant * height
+
+    def kinetic_potential_energy(self):
+        return self.weight * self.gravity_constant * self.fall_distance
+
+    def simulate_cyclic_process(self, num_cycles):
+        total_energy_generated_joules = 0
+        total_torque_generated = 0
+
+        for _ in range(num_cycles):
+            # Lifting phase (no energy generation)
+            potential_energy_lifted = self.potential_energy(self.fall_distance)
+
+            # Generation phase - Only consider work done during falling
+            work_done_fallen = potential_energy_lifted  # Assuming the falling phase has the same potential energy
+
+            # Calculate kinetic energy during falling phase
+            final_velocity = (2 * self.gravity_constant * self.fall_distance)**0.5
+            radius_of_rotation = 0.5 * self.fall_distance
+            moment_of_inertia = self.weight * radius_of_rotation**2
+            angular_velocity = final_velocity / radius_of_rotation
+            kinetic_energy = 0.5 * moment_of_inertia * angular_velocity**2
+
+            # Calculate total energy generated in joules
+            energy_generated_joules = (work_done_fallen + kinetic_energy) * self.generator_efficiency
+            total_energy_generated_joules += energy_generated_joules
+
+            # Calculate torque (τ) in Newton-meters
+            torque_nm = moment_of_inertia * angular_velocity / radius_of_rotation
+            total_torque_generated += torque_nm
+
+        # Deduct 20% for energy slippage due to the compressor
+        energy_slippage_joules = total_energy_generated_joules * 0.20
+        total_energy_generated_after_slippage = total_energy_generated_joules - energy_slippage_joules
+
+        print(f"Total Energy Generated for {num_cycles} cycles before slippage: {total_energy_generated_joules:.2f} joules")
+        print(f"Energy Slippage due to compressor: {energy_slippage_joules:.2f} joules")
+        print(f"Total Energy Generated for {num_cycles} cycles after slippage: {total_energy_generated_after_slippage:.2f} joules")
+        print(f"Total Torque Generated for {num_cycles} cycles: {total_torque_generated:.2f} Nm")
+        print(f"Equivalent Energy in Newton-meters: {total_energy_generated_joules:.2f} Nm")
+
+        # Print the new measurement of weight kinetic potential energy converted to joules
+        kinetic_potential_energy_joules = self.kinetic_potential_energy()
+        print(f"Weight Kinetic Potential Energy: {kinetic_potential_energy_joules} joules")
+
+# Example Usage:
+if __name__ == "__main__":
+    # Adjust the parameters below as needed:
+    weight = 5000  # in kg
+    helium_chamber_volume = 10  # in m^3
+    generator_efficiency = 0.80  # as a decimal (e.g., 0.70 for 70%)
+    fall_distance = 20  # in meters
+    num_cycles = 1
+
+    helium_generator = HeliumGravitationalGenerator(weight=weight, helium_chamber_volume=helium_chamber_volume, generator_efficiency=generator_efficiency, fall_distance=fall_distance)
+    helium_generator.simulate_cyclic_process(num_cycles)
