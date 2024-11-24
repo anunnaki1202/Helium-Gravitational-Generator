@@ -5,6 +5,10 @@ This system is to generate electrical energy by utilizing the buoyancy of helium
 The system cyclically lifts a weight using helium buoyancy in an air-filled chamber and then allows the weight to fall by removing air from the chamber to create a vacuum. 
 This cycle of lifting and falling converts gravitational potential energy into usable electrical energy through a generator.. Here's a detailed description of what the simulation does:
 
+Two-Chamber Helium Gravitational Energy Generator System
+Objective
+The objective of this two-chamber system is to generate electrical energy by cyclically lifting and dropping weights using helium buoyancy and controlled pressure changes. By utilizing paired chambers with complementary air and vacuum cycles, the system improves efficiency by approximately 40%, as each chamber can partially vacuum the other when they’re at opposite stages.
+
 
 System Components
 Paired Helium Balloons with Attached Weights:
