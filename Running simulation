@@ -86,7 +86,7 @@ if __name__ == "__main__":
     helium_chamber_volume = 10  # in m^3
     generator_efficiency = 0.80  # as a decimal (e.g., 0.70 for 70%)
     fall_distance = 20  # in meters
-    num_cycles = 1
+    num_cycles = 1000
 
     helium_generator = HeliumGravitationalGenerator(
         weight=weight,
